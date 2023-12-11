@@ -57,6 +57,19 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
+
+  // Retrieves text from localstorage and adds text to appropriate textbox.
+  function retrieveLocalStorageItems () {
+    $(".time-block").each(function () {
+      var timeBlockId = $(this).attr("id");
+      var savedText = localStorage.getItem(timeBlockId);
+
+      // Only adds text if there is a value saved in localStorage
+      if (savedText !== null) {
+        $(this).find(".description").val(savedText);
+      }
+    });
+  }
   // TODO: Add code to display the current date in the header of the page.
   // Updates the current time in the header
   function headerTimeUpdate() {
@@ -64,6 +77,8 @@ $(function () {
     headerDateEl.text(rightNow.format("dddd, MMMM DD"));
   }
   headerTimeUpdate();
-  setInterval(headerTimeUpdate, 1000);
   updateBlockColours();
+  retrieveLocalStorageItems();
+  setInterval(headerTimeUpdate, 1000);
+  setInterval(updateBlockColours, 1000);
 });
